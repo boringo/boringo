@@ -11,7 +11,10 @@ See the [wiki](https://github.com/boringo/boringo/wiki) for more information.
 #Development
 ##Prerequisites
 * `node` and `npm`. I recommend using [Node Version Manager (nvm)](https://github.com/creationix/nvm), which is a node analog of python's virtualenv. You will only be able to use this on Mac or Linux. It will allow simultaneous development of different apps that require different versions of node, and it doesn't require a super user to install packages globally. If you use Windows, you shouldn't. But if you do, install node from [download page](http://nodejs.org/download/).
-  * install nvm with the following: `curl https://raw.githubusercontent.com/creationix/nvm/v0.20.0/install.sh | bash`, then restart your terminal.
+  * install nvm with the following: `curl https://raw.githubusercontent.com/creationix/nvm/v0.20.0/install.sh | bash`
+  * add nvm to your path: `source ~/.nvm/nvm.sh` (If you don't want to do this each time you open terminal, you can add it to your bashrc/bash profile file):
+    * Linux: `echo 'source ~/.nvm/nvm.sh' >> ~/.bashrc`
+    * Mac: `echo 'source ~/.nvm/nvm.sh' >> ~/.bash_profile`
   * install node: `nvm install 0.10`
   * open a new shell and `nvm use 0.10`
 * [MongoDB](http://docs.mongodb.org/manual/installation/), installed and __running__ on the default port. Just use the instructions found on their page for installing and running it.
