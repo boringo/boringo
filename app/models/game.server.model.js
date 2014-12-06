@@ -4,7 +4,7 @@
  * Module dependencies.
  */
 var mongoose = require('mongoose'),
-	Schema = mongoose.Schema,
+	Schema = mongoose.Schema;
 
 /**
  * Game Schema
@@ -15,38 +15,38 @@ var GameSchema = new Schema({
 		default: 0,
 	},
 	gameName:{
-		type String,
-		default: "",
+		type: String,
+		default: '',
 	}, 
     gameTerms:{
-    	type [String],
+    	type: [String],
 
     }, 
     freeSpace: {
-    	type Boolean,
+    	type: Boolean,
     },
     termValidation: {
-    	type Array,
-    	default [],
+    	type: Array,
+    	default: [],
     },
     playerCount: {
-    	type Number,
+    	type: Number,
     },
     players: {
-    	type [Number],
+    	type: [Number],
     },
     boardIdPairs: {
-    	type Array,
+    	type: Array,
     },
     currentBoardSize: {	
-    	type [Number],
+    	type: [Number],
     },
     currentLeader: {
-    	type [Number],
+    	type: [Number],
     },
     winner: {
-    	type Number,
-    },
+    	type: Number,
+    }
 });
 
 
