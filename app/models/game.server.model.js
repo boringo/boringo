@@ -9,6 +9,11 @@ var mongoose = require('mongoose'),
 /**
  * Game Schema
  */
+var boardPair = new Schema({
+    userId: Schema.ObjectId, 
+    boardId: Schema.ObjectId
+});
+
 var GameSchema = new Schema({
 	gameName:{
 		type: String,
@@ -31,7 +36,7 @@ var GameSchema = new Schema({
     players: {
     	type: [Number],
     },
-    boardIdPairs: [{ userId: Schema.ObjectId, boardId: Schema.ObjectId }],
+    boardIdPairs: [boardPair],
     boardLength: {	
     	type: Number,
     },

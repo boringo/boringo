@@ -7,14 +7,12 @@ var mongoose = require('mongoose'),
 	Schema = mongoose.Schema,
     ObjectId = Schema.ObjectId;
 /**
- * Game Schema
+ * BoardSchema
  */
 var BoardSchema = new Schema({
-    tiles: {
-        type: [[Number]],
-    }
-
+    tiles: [Number]
 });
+
 BoardSchema.virtual('boardId').get(function()
 {
     return this._id;
