@@ -8,9 +8,9 @@ module.exports = function(app) {
 	app.route('/games/create')
 		.post(users.requiresLogin, games.create);
 
-	app.route('/games/list')
+	app.route('/games/list')//NI
 		.get(users.requiresLogin, games.list);
 
-	app.route('/games/join')
+	app.route('/games/join')//NI
 		.post(users.requiresLogin, games.join);
 };

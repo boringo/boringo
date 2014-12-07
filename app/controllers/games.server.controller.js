@@ -7,9 +7,50 @@ var User = mongoose.model('User');
 var Game = mongoose.model('Game');
 var _ = require('lodash');
 
+// Creates a Board
+function generateBoard(TermArray,boardLength,free)
+{
+	var ArrayCopy = TermArray.slice();
+	var boardArray = new Array(boardLength);
+	var index;
+	var i;
+	var j;
+	for(i=0; i<boardLength; i++)
+	{
+		boardArray[i] = new Array(boardLength);
+	}
+	for(i=0; i<boardLength; i++)
+	{
+		for(j=0; j<boardLength; j++)
+		{
+			index = Math.floor(Math.random() * ArrayCopy.length );
+			if(index < ArrayCopy.length)
+			{
+				boardArray[i][j] = ArrayCopy[index];
+				ArrayCopy.splice(index,1);
+			}
+		}
+
+	}
+
+	if(free === true)
+	{
+		var x = Math.floor(Math.random()*boardLength);
+		var y = Math.floor(Math.random()*boardLength);
+		boardArray[x][y] = 'FREESPACE';
+
+	}
+
+	return boardArray;
+
+}
+
+
+
 // Creates a game.
 exports.create = function(req, res) {
 	var body = req.body;
+	var user = req.session.user;
 	var game = new Game({
 		gameName: body.gameName,
 		gameTerms: body.gameTerms,
@@ -22,9 +63,13 @@ exports.create = function(req, res) {
 				message: errorHandler.getErrorMessage(err)
 			});
 		} else {
-			res.json(game);
+			var gameBoard = generateBoard(body.gameTerms,body.boardLength,body.freeSpace);
+			res.json(gameBoard);
+			//res.json(game);
 		}
 	});
+
+
 };
 
 // Lists all games.
@@ -35,7 +80,7 @@ exports.list = function(req, res) {
 				message: errorHandler.getErrorMessage(err)
 			});
 		} else {
-			res.json(req.session.user);
+			res.json(games);
 		}
 	});
 };
