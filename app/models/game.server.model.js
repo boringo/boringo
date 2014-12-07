@@ -4,16 +4,17 @@
  * Module dependencies.
  */
 var mongoose = require('mongoose'),
-	Schema = mongoose.Schema;
-
+	Schema = mongoose.Schema,
+    ObjectId = Schema.ObjectId;
 /**
  * Game Schema
  */
+var boardPair = new Schema({
+    userId: Schema.ObjectId, 
+    boardId: Schema.ObjectId
+});
+
 var GameSchema = new Schema({
-	gameId: {
-		type: Number,
-		default: 0,
-	},
 	gameName:{
 		type: String,
 		default: '',
@@ -35,20 +36,19 @@ var GameSchema = new Schema({
     players: {
     	type: [Number],
     },
-    boardIdPairs: {
-    	type: Array,
-    },
-    currentBoardSize: {	
-    	type: [Number],
-    },
-    currentLeader: {
-    	type: [Number],
-        default: 0,
+    boardIdPairs: [boardPair],
+    boardLength: {	
+    	type: Number,
     },
     winner: {
     	type: Number,
     }
 });
+GameSchema.virtual('gameId').get(function() 
+{
+    return this._id;
+});
+
 
 
 mongoose.model('Game', GameSchema);
