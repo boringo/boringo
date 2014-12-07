@@ -43,6 +43,7 @@ var GameSchema = new Schema({
     },
     currentLeader: {
     	type: [Number],
+        default: 0,
     },
     winner: {
     	type: Number,
