@@ -5,7 +5,8 @@
  */
 var mongoose = require('mongoose'),
 	Schema = mongoose.Schema,
-	crypto = require('crypto');
+	crypto = require('crypto'),
+	ObjectId = Schema.ObjectId;
 
 /**
  * A Validation function for local strategy properties
@@ -67,21 +68,20 @@ var UserSchema = new Schema({
 		type: Number,
 		default: 0,
 	},
-	currentGame: {
+	currentGameId: {
 		type: Number,
-		default: 0,
+		default: -1,
+	},
+	currentBoardId: {
+		type: Number,
+		default: -1,
 	},
 	currentBoard: {
-		type: Number,
-		default: 0,
+		type: [[Number]],
 	},
 	tilesSelected: {
 		type: Array,
 		default: [],
-
-	},
-	connectedTiles: {
-		type: Number,
 	},
 	salt: {
 		type: String 
@@ -113,6 +113,11 @@ var UserSchema = new Schema({
 	resetPasswordExpires: {
 		type: Date
 	}
+});
+
+UserSchema.virtual('userId').get(function()
+{
+    return this._id;
 });
 
 /**
