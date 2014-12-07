@@ -9,11 +9,12 @@ var _ = require('lodash');
 
 // Creates a game.
 exports.create = function(req, res) {
+	var body = req.body;
 	var game = new Game({
-		gameName: req.gameName,
-		gameTerms: req.gameTerms,
-		freeSpace: req.freeSpace,
-		boardLength: req.boardLength
+		gameName: body.gameName,
+		gameTerms: body.gameTerms,
+		freeSpace: body.freeSpace,
+		boardLength: body.boardLength
 	});
 	game.save(function(err) {
 		if (err) {
