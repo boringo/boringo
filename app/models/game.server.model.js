@@ -17,11 +17,9 @@ var boardPair = new Schema({
 var GameSchema = new Schema({
 	gameName:{
 		type: String,
-		default: '',
 	}, 
     gameTerms:{
     	type: [String],
-
     }, 
     freeSpace: {
     	type: Boolean,

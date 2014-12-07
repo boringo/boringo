@@ -7,6 +7,25 @@ var User = mongoose.model('User');
 var Game = mongoose.model('Game');
 var _ = require('lodash');
 
+// Creates a game.
+exports.create = function(req, res) {
+	var game = new Game({
+		gameName: req.gameName,
+		gameTerms: req.gameTerms,
+		freeSpace: req.freeSpace,
+		boardLength: req.boardLength
+	});
+	game.save(function(err) {
+		if (err) {
+			return res.status(400).send({
+				message: errorHandler.getErrorMessage(err)
+			});
+		} else {
+			res.json(game);
+		}
+	});
+};
+
 // Lists all games.
 exports.list = function(req, res) {
 	Game.find(null, 'gameId gameName playerCount', function(err, games) {
@@ -15,14 +34,14 @@ exports.list = function(req, res) {
 				message: errorHandler.getErrorMessage(err)
 			});
 		} else {
-			res.json(games);
+			res.json(req.session.user);
 		}
 	});
 };
 
 // Joins a game.
 exports.join = function(req, res) {
-	var gameId = req.gameId;
+	res.json(req.session.user);
 };
 
 // /**
