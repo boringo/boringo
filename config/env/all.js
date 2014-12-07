@@ -45,6 +45,7 @@ module.exports = {
 			css: [
 				'public/lib/bootstrap/dist/css/bootstrap.css',
 				'public/lib/bootstrap/dist/css/bootstrap-theme.css',
+				'public/lib/angular-off-canvas/off-canvas.css'
 			],
 			js: [
 				'public/lib/angular/angular.js',
@@ -52,7 +53,8 @@ module.exports = {
 				'public/lib/angular-animate/angular-animate.js',
 				'public/lib/angular-ui-router/release/angular-ui-router.js',
 				'public/lib/angular-ui-utils/ui-utils.js',
-				'public/lib/angular-bootstrap/ui-bootstrap-tpls.js'
+				'public/lib/angular-bootstrap/ui-bootstrap-tpls.js',
+				'public/lib/angular-off-canvas/off-canvas.js'
 			]
 		},
 		css: [
