@@ -10,7 +10,11 @@ var _ = require('lodash');
 // Creates a Board
 function generateBoard(TermArray,boardLength,free)
 {
-	var ArrayCopy = TermArray.slice();
+	var indexArray = [];
+	for(var t = 0; t < TermArray.length; t++)
+	{
+		indexArray[t] = t;
+	}
 	var boardArray = new Array(boardLength);
 	var index;
 	var i;
@@ -23,11 +27,11 @@ function generateBoard(TermArray,boardLength,free)
 	{
 		for(j=0; j<boardLength; j++)
 		{
-			index = Math.floor(Math.random() * ArrayCopy.length );
-			if(index < ArrayCopy.length)
+			index = Math.floor(Math.random() * indexArray.length );
+			if(index < indexArray.length)
 			{
-				boardArray[i][j] = ArrayCopy[index];
-				ArrayCopy.splice(index,1);
+				boardArray[i][j] = indexArray[index];
+				indexArray.splice(index,1);
 			}
 		}
 
@@ -37,7 +41,7 @@ function generateBoard(TermArray,boardLength,free)
 	{
 		var x = Math.floor(Math.random()*boardLength);
 		var y = Math.floor(Math.random()*boardLength);
-		boardArray[x][y] = 'FREESPACE';
+		boardArray[x][y] = -1;
 
 	}
 
