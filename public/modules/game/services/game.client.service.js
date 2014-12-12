@@ -7,7 +7,7 @@ angular.module('game').factory('Game', ['$resource',
 			gameId: '@_id'
 		}, {
 			update: {
-				method: 'PUT'
+				method: 'POST'
 			}
 		});
 	}

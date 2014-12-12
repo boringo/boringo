@@ -4,6 +4,31 @@ angular.module('game').controller('GameController', ['$scope', '$stateParams', '
 	function($scope, $stateParams, $location, Authentication, Game) {
 		$scope.authentication = Authentication;
 
+		$scope.gameName = '';
+		$scope.gameTerms = '';
+		$scope.freeSpace = '';
+		$scope.boardLength = '';
+
+		$scope.talk = function(){
+			alert($scope.gameTerms);
+		};
+
+		$scope.create = function(){
+			var game = new Game({
+				gameName : this.gameName,
+				gameTerms : this.gameTerms,
+				freeSpace : this.freeSpace,
+				boardLength : this.boardLength
+			});
+
+			game.$save(function(response){
+				alert(response);
+			}, function(errorResponse){
+				alert(errorResponse);
+			});
+
+		};
+
 		// $scope.create = function() {
 		// 	var article = new Articles({
 		// 		title: this.title,

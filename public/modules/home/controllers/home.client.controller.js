@@ -1,12 +1,34 @@
 'use strict';
 
-angular.module('home').controller('HomeController', ['$scope', '$stateParams', '$location', 'Authentication',
-	function($scope, $stateParams, $location, Authentication) {
-		$scope.authentication = Authentication;
+angular.module('home').controller('HomeController', ['$scope', '$stateParams', '$location', 'Authentication', 'Game',
+	function($scope, $stateParams, $location, Authentication, Game) {
+				$scope.authentication = Authentication;
 
-		$scope.login = function(){
-			$location.path('/home/login');
+		$scope.gameName = '';
+		$scope.gameTerms = '';
+		$scope.freeSpace = '';
+		$scope.boardLength = '';
+
+		$scope.talk = function(){
+			alert(this.gameTerms);
 		};
+
+		$scope.create = function(){
+			var game = new Game({
+				gameName : this.gameName,
+				gameTerms : this.gameTerms,
+				freeSpace : this.freeSpace,
+				boardLength : this.boardLength
+			});
+
+			game.$save(function(response){
+				alert(response);
+			}, function(errorResponse){
+				alert(errorResponse);
+			});
+
+		};
+
 		// $scope.create = function() {
 		// 	var article = new Articles({
 		// 		title: this.title,
