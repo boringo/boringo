@@ -62,6 +62,7 @@ exports.signin = function(req, res, next) {
 				if (err) {
 					res.status(400).send(err);
 				} else {
+					console.log(user);
 					req.session.userId = user._id;
 					res.json(user);
 				}
