@@ -12,7 +12,7 @@ module.exports = {
 		}
 	},
 	app: {
-		title: 'MEAN.JS - Development Environment'
+		title: 'Boringo'
 	},
 	facebook: {
 		clientID: process.env.FACEBOOK_ID || '1734617540096282',

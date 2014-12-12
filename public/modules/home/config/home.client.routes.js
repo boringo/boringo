@@ -6,7 +6,7 @@ angular.module('home').config(['$stateProvider',
 		// Home state routing
 		$stateProvider.
 		state('home', {
-			url: '/home',
+			url: '/',
 			templateUrl: 'modules/home/views/home.client.view.html'
 		}).
 		state('create', {

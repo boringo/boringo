@@ -1,9 +1,12 @@
 'use strict';
 
-angular.module('home').controller('HomeController', ['$scope', '$stateParams', '$location', 'Authentication', 'Home',
-	function($scope, $stateParams, $location, Authentication, Home) {
+angular.module('home').controller('HomeController', ['$scope', '$stateParams', '$location', 'Authentication',
+	function($scope, $stateParams, $location, Authentication) {
 		$scope.authentication = Authentication;
 
+		$scope.login = function(){
+			$location.path('/home/login');
+		};
 		// $scope.create = function() {
 		// 	var article = new Articles({
 		// 		title: this.title,
