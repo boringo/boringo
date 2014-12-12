@@ -255,7 +255,132 @@ exports.state = function(req, res) {
 };
 
 // Selects a tile in a game.
-exports.select = function(req, res) {
-	// TODO
-	res.json({gameID: req.params.gameID});
+exports.select = function(req, res){
+	User.findById(req.session.userId, function(err,user){
+	 	if(err){
+	 		return res.status(500).send({
+				message: errorHandler.getErrorMessage(err)
+			 });
+	 	}
+	 	else{
+		 	Game.findById(req.params.gameID, function(err,game){
+			 	if(err){
+			 		return res.status(500).send({
+						message: errorHandler.getErrorMessage(err)
+					 });
+			 	}
+			 	else{
+			 		if(game.winner === -1){
+				 		var x = req.body.x;
+				 		var y = req.body.y;
+				 		var currentBoard;
+				 		var i;
+				 		for(i = 0; i < game.boardIdPairs.length; i++){
+				 			if(game.boardIdPairs[i].userId.equals(user.userId)){
+				 				Board.findById(game.boardIdPairs[i].boardId, function(err,boardDoc){
+								 	if(err){
+								 		return res.status(500).send({
+											message: errorHandler.getErrorMessage(err)
+										});
+								 	}
+								 	else{
+								 		currentBoard = boardDoc;
+								 		currentBoard.tilesSelected[x][y] = true;
+								 		var j;
+								 		var k;
+								 		var isWinning = false;
+								 		//check rows 
+								 		for(i = 0; i < game.boardLength; i++){
+								 			for(j = 0; j < game.boardLength; j++){
+								 				if(game.currentBoard.tilesSelected[i][j] !== true){
+								 					isWinning = false;
+								 					break;
+								 				}
+								 				else{
+								 					isWinning = true;
+								 				}
+								 			}
+								 			if(isWinning === true){
+								 				game.winner = user.userId;
+								 				break;
+								 			}
+				 						}//END CHECK ROWS
+				 						if(isWinning === false){
+				 							//Check Columns
+					 						for(i = 0; i < game.boardLength; i++){
+									 			for(j = 0; j < game.boardLength; j++){
+									 				if(game.currentBoard.tilesSelected[j][i] !== true){
+									 					isWinning = false;
+									 					break;
+									 				}
+									 				else{
+									 					isWinning = true;
+									 				}
+									 			}
+									 			if(isWinning === true){
+									 				game.winner = user.userId;
+									 				break;
+									 			}
+					 						}//END CHECK Columns
+				 						}
+				 						if(isWinning === false){
+				 							k = game.boardLength-1;
+				 							j = 0;
+				 							//Check Left Diagonal
+					 						for(i = 0; i < game.boardLength; i++){
+									 			if(game.currentBoard.tilesSelected[i][j] !== true){
+									 				isWinning = false;
+									 				break;
+									 			}
+									 			j++;
+					 						}//END CHECK Left DIAGONAL //Start check Right Diagonal
+					 						for(i = 0; i < game.boardLength; i++){
+									 			if(game.currentBoard.tilesSelected[k][i] !== true){
+									 				isWinning = false;
+									 				break;
+									 			}
+									 			k--;
+
+					 						}//END CHECK Right DIAGONAL
+					 						if(isWinning === true){
+								 				game.winner = user.userId;
+								 			}
+				 						}
+					 					game.save(function(err){
+											if (err) {
+												console.log('Error saving game to database.');
+												return res.status(500).send({
+													message: errorHandler.getErrorMessage(err)
+												});
+											} 
+											else {
+
+													boardDoc.save(function(err){
+														if (err) {
+															console.log('Error saving game to database.');
+															return res.status(500).send({
+																message: errorHandler.getErrorMessage(err)
+															});
+														} 
+														else {
+															// RETURN GAME STATE
+														}
+													});//Board SAVE END
+											}
+										});//GAME SAVE END
+								 	}// Find Game Else
+								});
+				 			}
+
+				 		}
+
+				 	}
+				 	else{	//TODO get game state
+				 		//CHANGE THIS!!!! THERE IS A WINNER ALREADY
+				 		res.json({gameID: req.params.gameID});
+				 	}
+			 	}
+			});
+	 	}
+	});
 };
