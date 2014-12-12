@@ -139,9 +139,8 @@ exports.join = function(req, res) {
 						message: errorHandler.getErrorMessage(err)
 					});
 				} else {
-					console.log({username: user.username, currentGames: user.CurrentGames});
 					if (user.CurrentGames.indexOf(game._id) > -1) {
-						// The user has already joined this game.
+						// The user has already joined the game.
 				 		return res.status(400).send({
 							message: 'You have already joined that game.'
 						});
@@ -166,24 +165,32 @@ exports.join = function(req, res) {
 									message: errorHandler.getErrorMessage(err)
 								});
 							} else {
-								user.save(function(err) {
+								board.save(function(err) {
 									if (err) {
 								 		return res.status(500).send({
 											message: errorHandler.getErrorMessage(err)
 										});
 									} else {
-										// Create and return the response object.
-										var obj = {
-											// Fields from the game document.
-											gameTerms: game.gameTerms,
-											playerCount: game.playerCount,
-											players: game.players,
-											boardLength: game.boardLength,
-											winner: game.winner,
-											// The player's board.
-											board: boardObject
-										};
-										res.json(obj);
+										user.save(function(err) {
+											if (err) {
+										 		return res.status(500).send({
+													message: errorHandler.getErrorMessage(err)
+												});
+											} else {
+												// Create and return the response object.
+												var obj = {
+													// Fields from the game document.
+													gameTerms: game.gameTerms,
+													playerCount: game.playerCount,
+													players: game.players,
+													boardLength: game.boardLength,
+													winner: game.winner,
+													// The player's board.
+													board: boardObject
+												};
+												res.json(obj);
+											}
+										});
 									}
 								});
 							}
@@ -268,8 +275,62 @@ exports.leave = function(req, res) {
 
 // Returns the state of a game.
 exports.state = function(req, res) {
-	// TODO
-	res.json({gameID: req.params.gameID});
+	User.findById(req.session.userId, function(err, user){
+		if (err) {
+	 		return res.status(500).send({
+				message: errorHandler.getErrorMessage(err)
+			});
+		} else {
+			Game.findById(req.params.gameID, function(err, game) {
+				if (err) {
+			 		return res.status(400).send({
+						message: errorHandler.getErrorMessage(err)
+					});
+				} else {
+					if (user.CurrentGames.indexOf(game._id) === -1) {
+						// The user has not joined the game.
+				 		return res.status(400).send({
+							message: 'You have not joined that game.'
+						});
+					} else {
+						// Retrieve the user's board.
+						var boardID = null;
+						for (var i = 0; i < game.boardIdPairs.length; i++) {
+							if (game.boardIdPairs[i].userId.equals(user._id)) {
+								boardID = game.boardIdPairs[i].boardId;
+								break;
+							}
+						}
+						if (boardID === null) {
+					 		return res.status(500).send({
+								message: 'Internal Server Error'
+							});
+						}
+						Board.findById(boardID, function(err, boardObject) {
+							if (err) {
+						 		return res.status(500).send({
+									message: errorHandler.getErrorMessage(err)
+								});
+							} else {
+								// Create and return the response object.
+								var obj = {
+									// Fields from the game document.
+									playerCount: game.playerCount,
+									players: game.players,
+									winner: game.winner,
+									// The player's board.
+									board: {
+										tilesSelected: boardObject.tilesSelected
+									}
+								};
+								res.json(obj);
+							}
+						});
+					}
+				}
+			});
+		}
+	});
 };
 
 // Selects a tile in a game.
