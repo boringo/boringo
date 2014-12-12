@@ -1,21 +1,54 @@
 <section data-ng-controller="HomeController">
-<p>This is the view for joining a game. Existing games should be found here.</p>
+
+<link rel="stylesheet" href="../../../lib/foundation/css/foundation.css"/>
+<!--p>This is the view for joining a game. Existing games should be found here.</p-->
 <link rel="stylesheet" href="../../game/css/main.css" />
 
- <h1>Active Games!</h1>
-    <div class="panel">
-      <table width="100%">
-        <thead>
-          <tr><th>Game</th><th>Current Number of Players</th>
-        </thead>
-        <tbody>
-           <tr><td><a href="#" class="button" id="game">CS 360 Baby!!!</a></td><td>8</td></tr>
-           <tr><td><a href="#" class="button" id="game">blah blah blah</a></td><td>2</td></tr>
-           <tr><td><a href="#" class="button" id="game">KSL News(102.7 FM)</a></td><td>20</td></tr>
-           <tr><td><a href="#" class="button" id="game">bored please help!</a></td><td>1</td></tr>
-           <tr><td><a href="#" class="button" id="game">Cougareat Employees</a></td><td>11</td></tr>
-        </tbody>  
-      </table>  
-    </div>   
 
+  
+  <div class="off-canvas-wrap" data-offcanvas>
+  <div class="inner-wrap">
+    <nav class="tab-bar">
+      <section class="left-small">
+        <a class="left-off-canvas-toggle menu-icon" href="#"><span></span></a>
+      </section>
+    </nav>
+
+    <aside class="left-off-canvas-menu">
+      <ul class="off-canvas-list">
+	    <li><label>Menu</label></li>
+        <li><a href="#">View Profile</a></li>
+        <li><a href="#">Logout</a></li>
+        <li><a href="#">Home</a></li>
+      </ul>
+    </aside>
+
+    <section class="main-section">
+	 <h1>Active Games!</h1>
+		<div class="panel">
+		  <table width="100%">
+			<thead>
+			  <tr><th>Game</th><th>Current Number of Players</th>
+			</thead>
+			<tbody>
+			   <tr><td><a href="#" class="button" id="game">CS 360 Baby!!!</a></td><td>8</td></tr>
+			   <tr><td><a href="#" class="button" id="game">blah blah blah</a></td><td>2</td></tr>
+			   <tr><td><a href="#" class="button" id="game">KSL News(102.7 FM)</a></td><td>20</td></tr>
+			   <tr><td><a href="#" class="button" id="game">bored please help!</a></td><td>1</td></tr>
+			   <tr><td><a href="#" class="button" id="game">Cougareat Employees</a></td><td>11</td></tr>
+			</tbody>  
+		  </table>  
+		</div>   
+    </section>
+
+  <a class="exit-off-canvas"></a>
+
+  </div>
+</div>
+
+<script src="../../../lib/foundation/js/vendor/jquery.js"></script>
+<script src="../../../lib/foundation/js/foundation/foundation.js"></script>
+<script src="../../../lib/foundation/js/foundation/foundation.offcanvas.js"></script>
+<script>$(document).foundation();</script>
+	
 </section>

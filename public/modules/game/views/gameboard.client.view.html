@@ -1,20 +1,68 @@
 <section data-ng-controller="GameController">
-<p>This is the view for the Game Board</p>
 
+<link rel="stylesheet" href="../../../lib/foundation/css/foundation.css"/>
+<link rel="stylesheet" href="../../game/css/main.css" />
 
-<link rel="stylesheet" href="../css/main.css" />
+  
+  <div class="off-canvas-wrap" data-offcanvas>
+  <div class="inner-wrap">
+    <nav class="tab-bar">
+      <section class="left-small">
+        <a class="left-off-canvas-toggle menu-icon" href="#"><span></span></a>
+      </section> 
+	  
+	  <section class="right-small">
+        <a class="right-off-canvas-toggle menu-icon" href="#"><span></span></a>
+      </section> 
+    </nav>
 
-<h1>CS 360 Baby!!!</h1>
-    <table align="center">
-      <tbody>
-        <tr><td class="cell">Boring</td><td class="cell" id="selected">Serriously</td><td class="cell">Duh!</td><td class="cell">Um..</td></tr>
-         <tr><td class="cell">1</td><td class="cell">2</td><td class="cell">3</td><td class="cell">4</td></tr>
-         <tr><td class="cell">Dawg</td><td class="cell">5</td><td class="cell">6</td><td class="cell">0</td></tr>
-         <tr><td class="cell">7</td><td class="cell">8</td><td class="cell">9</td><td class="cell">10</td></tr>
-      </tbody>  
-    </table>  
-    <br>
-    <input type="text" placeholder="Talk smack..."/> 
+    <aside class="left-off-canvas-menu">
+      <ul class="off-canvas-list">
+	    <li><label>Menu</label></li>
+        <li><a href="#">View Profile</a></li>
+        <li><a href="#">Logout</a></li>
+        <li><a href="#">Home</a></li>
+		<li><a href="#">Leave game</a></li>
+      </ul>
+    </aside>
+	
+	<aside class="right-off-canvas-menu">
+      <ul class="off-canvas-list">
+	    <li><label>Players</label></li>
+        <li><h3>Your mom</h3></li>
+        <li><h3>Kenny G</h3></li>
+        <li><h3>Dawg</h3></li>
+		<li><h3>Master</h3></li>
+      </ul>
+    </aside>
+	
+
+    <section class="main-section">
+		<h1>CS 360 Baby!!!</h1>
+		<div class="gameboard">
+			<table align="center" id="gameboard">
+			  <tbody>
+				<tr><td class="cell">Boring</td><td class="cell" id="selected">Serriously</td><td class="cell">Duh!</td><td class="cell">Um..</td></tr>
+				 <tr><td class="cell">Captain obvious states the obvious</td><td class="cell">2</td><td class="cell">3</td><td class="cell">4</td></tr>
+				 <tr><td class="cell">Dawg</td><td class="cell">Free Space</td><td class="cell">6</td><td class="cell">0</td></tr>
+				 <tr><td class="cell">7</td><td class="cell">8</td><td class="cell">9</td><td class="cell">10</td></tr>
+			  </tbody>  
+			</table>  
+		</div>
+		<br>
+		<input type="text" placeholder="Talk smack..."/> 
+    </section>
+
+  <a class="exit-off-canvas"></a>
+
+  </div>
+</div>
+
+<script src="../../../lib/foundation/js/vendor/jquery.js"></script>
+<script src="../../../lib/foundation/js/foundation/foundation.js"></script>
+<script src="../../../lib/foundation/js/foundation/foundation.offcanvas.js"></script>
+<script>$(document).foundation();</script>
+
 </section>
 
 

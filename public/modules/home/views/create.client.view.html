@@ -1,5 +1,70 @@
 <section data-ng-controller="HomeController">
-<p>This is the Create Game view. Set options for a game and provide a button to start a game.</p>
+
+<link rel="stylesheet" href="../../../lib/foundation/css/foundation.css"/>
+<link rel="stylesheet" href="../../game/css/main.css" />
+
+
+  
+  <div class="off-canvas-wrap" data-offcanvas>
+  <div class="inner-wrap">
+    <nav class="tab-bar">
+      <section class="left-small">
+        <a class="left-off-canvas-toggle menu-icon" href="#"><span></span></a>
+      </section>
+    </nav>
+
+    <aside class="left-off-canvas-menu">
+      <ul class="off-canvas-list">
+	    <li><label>Menu</label></li>
+        <li><a href="#">View Profile</a></li>
+        <li><a href="#">Logout</a></li>
+        <li><a href="#">Home</a></li>
+      </ul>
+    </aside>
+
+    <section class="main-section">
+		<h1>Create New Game</h1>
+		  
+		  <h3>Game Title</h3>
+			<input placeholder="Title"/>
+		  <br>
+		  <br>
+		  <br>
+
+		  <h3>Add Terms</h3>
+		<input placeholder="Term"/>
+		<a href="#" class="button">Add</a>
+		  <br>
+		  <br>
+		  
+		  <ul class="button-group">
+			<li><h3>Board size</h3></li>
+			<li><div href="#" class="button">4X4</div></li>
+			<li><div href="#" class="button">5X5</div></li>
+		  </ul>
+		  <h3>You have x terms.</h3>
+		  <h3>A minumum of y is required with the selected board size.</h3>
+		  <br>
+		  <br>
+
+		  <h3>Free Space?</h3>
+		  <div class="switch">
+			<input id="exampleCheckboxSwitch" type="checkbox">
+			<label for="exampleCheckboxSwitch"></label>
+		  </div> 
+
+		<div class="button">Start!</div>
+    </section>
+
+  <a class="exit-off-canvas"></a>
+
+  </div>
+</div>
+
+<script src="../../../lib/foundation/js/vendor/jquery.js"></script>
+<script src="../../../lib/foundation/js/foundation/foundation.js"></script>
+<script src="../../../lib/foundation/js/foundation/foundation.offcanvas.js"></script>
+<script>$(document).foundation();</script>
 
 </section>
 
