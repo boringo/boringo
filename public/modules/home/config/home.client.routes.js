@@ -21,8 +21,8 @@ angular.module('home').config(['$stateProvider',
 			url: '/home/login',
 			templateUrl: 'modules/home/views/login.client.view.html'
 		}).
-		state('profile', {
-			url: '/home/profile', 
+		state('user_profile', {
+			url: '/home/user_profile', 
 			templateUrl: 'modules/home/views/profile.client.view.html'
 		});
 		// state('signup', {
