@@ -17,78 +17,126 @@ function generateBoard(TermArray,boardLength,free)
 		indexArray[t] = t;
 	}
 	var boardArray = new Array(boardLength);
+	var boolBoard = new Array(boardLength);
 	var index;
 	var i;
 	var j;
 	for(i=0; i<boardLength; i++)
 	{
 		boardArray[i] = new Array(boardLength);
+		boolBoard[i] = new Array(boardLength);
 	}
 	for(i=0; i<boardLength; i++)
 	{
 		for(j=0; j<boardLength; j++)
 		{
+			
+			boolBoard[i][j] = false;
 			index = Math.floor(Math.random() * indexArray.length );
 			if(index < indexArray.length)
 			{
 				boardArray[i][j] = indexArray[index];
 				indexArray.splice(index,1);
 			}
+		    
 		}
 
 	}
-
+	var freeCoords;
 	if(free === true)
 	{
 		var x = Math.floor(Math.random()*boardLength);
 		var y = Math.floor(Math.random()*boardLength);
 		boardArray[x][y] = -1;
+		boolBoard[x][y] = true;
 
 	}
 
-	return boardArray;
+	var boardInfo = ({
+		board: boardArray,
+		tilesSelected: boolBoard
+	});
+	return boardInfo;
 
 }
-
 
 
 // Creates a game.
 exports.create = function(req, res) {
 	var body = req.body;
-	var user = req.session.user;
-	console.log('Creating game...');
-	var game = new Game({
-		gameName: body.gameName,
-		gameTerms: body.gameTerms,
-		freeSpace: body.freeSpace,
-		boardLength: body.boardLength
-	});
-	console.log('Done.');
-	console.log('Creating board...');
-	var board = new Board({
-		tiles: generateBoard(body.gameTerms, body.boardLength, body.freeSpace)
-	});
-	console.log('Done.');
-	game.save(function(err) {
-		if (err) {
-			console.log('Error saving game to database.');
-			return res.status(400).send({
+	var user;
+	 User.findById(req.session.userId, function(err,userDoc){
+	 	if(err){
+	 		return res.status(500).send({
 				message: errorHandler.getErrorMessage(err)
 			});
-		} else {
-			board.save(function(err) {
+	 	}
+	 	else
+	 	{
+
+	 		user = userDoc;
+			var game = new Game({
+				gameName: body.gameName,
+				gameTerms: body.gameTerms,
+				freeSpace: body.freeSpace,
+				boardLength: body.boardLength
+			});
+			//Create Board, both the term reference board and the selected tiles Board.
+			console.log('Done.');
+			console.log('Creating board...');
+			var boardinfo = generateBoard(body.gameTerms, body.boardLength, body.freeSpace);
+			var board = new Board({
+				tiles: boardinfo.board,
+				tilesSelected: boardinfo.tilesSelected
+			});
+
+			user.CurrentGames.push(game.gameId);
+			game.playerCount ++;
+			game.players.push(user.userId);
+
+			var boardIdPair = ({
+				userId: user.userId,
+				boardId: board.boardId
+			});
+			game.boardIdPairs.push(boardIdPair);
+
+			console.log('Done.');
+			game.save(function(err) {
 				if (err) {
-					console.log('Error saving board to database.');
-					// TODO: First remove the game from the DB?
-					return res.status(400).send({
+					console.log('Error saving game to database.');
+					return res.status(500).send({
 						message: errorHandler.getErrorMessage(err)
 					});
 				} else {
-					res.json(board);
+					board.save(function(err) {
+						if (err) {
+							console.log('Error saving board to database.');
+							Game.remove({gameId: game.gameId}, function(err) {
+								if (err) {
+									return res.status(500).send({
+										message: errorHandler.getErrorMessage(err)
+									});
+								}
+							});
+							return res.status(500).send({
+								message: errorHandler.getErrorMessage(err)
+							});
+						} else {
+							user.save(function(err){
+								if (err) {
+									return res.status(500).send({
+										message: errorHandler.getErrorMessage(err)
+									});
+								}
+							});
+							res.json(board);
+						}
+					});
 				}
 			});
-		}
-	});
+	 	}
+	 });
+	
 };
 
 // Lists all games.

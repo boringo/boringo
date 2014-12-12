@@ -30,7 +30,7 @@ var GameSchema = new Schema({
         default: 0,
     },
     players: {
-    	type: [Number],
+    	type: [Schema.ObjectId],
         default: [],
     },
     boardIdPairs: {
