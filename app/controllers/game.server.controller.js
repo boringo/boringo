@@ -442,7 +442,17 @@ exports.select = function(req, res){
 															});
 														} 
 														else {
-															// RETURN GAME STATE
+															var obj = {
+																// Fields from the game document.
+																playerCount: game.playerCount,
+																players: game.players,
+																winner: game.winner,
+																// The player's board.
+																board: {
+																	tilesSelected: boardDoc.tilesSelected
+																}
+															};
+															res.json(obj);
 														}
 													});//Board SAVE END
 											}
@@ -454,9 +464,8 @@ exports.select = function(req, res){
 				 		}
 
 				 	}
-				 	else{	//TODO get game state
-				 		//CHANGE THIS!!!! THERE IS A WINNER ALREADY
-				 		res.json({gameID: req.params.gameID});
+				 	else{//There is a winner!
+						res.json({winner: game.winner});
 				 	}
 			 	}
 			});
