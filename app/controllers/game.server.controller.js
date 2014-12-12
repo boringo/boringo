@@ -197,7 +197,7 @@ exports.join = function(req, res) {
 
 // Leaves a game.
 exports.leave = function(req, res) {
-	User.findById(req.session.userId, function(err,user){
+	User.findById(req.session.userId, function(err, user) {
 	 	if(err){
 	 		return res.status(500).send({
 				message: errorHandler.getErrorMessage(err)
@@ -205,47 +205,65 @@ exports.leave = function(req, res) {
 	 	}
 	 	else
 	 	{
-		 
-		 	Game.findById(req.params.gameID, function(err,game){
+		 	Game.findById(req.params.gameID, function(err, game) {
 		 		if(err){
-		 			return res.status(500).send({
+		 			return res.status(400).send({
 						message: errorHandler.getErrorMessage(err)
 					});
 		 		}
 		 		else
 		 		{
 		 			var i;
-		 			for(i = 0; i < game.players.length; i++)
-		 			{
-		 				if(game.players[i] === user.userId)
-		 				{
-		 					game.players.splice(i,1);
-		 				}
-		 				if(game.boardIdPairs[i].userId === user.userId)
-		 				{
-		 					game.boardIdPairs[i].splice(i,1);
-		 				}
-		 			}
-		 			game.playerCount --;
-
+		 			var found = false;
 		 			for(i=0; i<user.CurrentGames.length; i++)
 		 			{
-		 				if(user.CurrentGames[i] === game.gameID)
+		 				if(user.CurrentGames[i].equals(game._id))
 		 				{
+		 					found = true;
 		 					user.CurrentGames.splice(i,1);
 		 				}
-
 		 			}
-
-					res.json({gameID: req.params.gameID});
+		 			if (found) {
+			 			for(i = 0; i < game.players.length; i++)
+			 			{
+			 				if(game.players[i].equals(user._id))
+			 				{
+			 					game.players.splice(i,1);
+			 				}
+			 				if(game.boardIdPairs[i].userId.equals(user._id))
+			 				{
+			 					game.boardIdPairs.splice(i,1);
+			 				}
+			 			}
+			 			game.playerCount--;
+						// Save the documents.
+						game.save(function(err) {
+							if (err) {
+						 		return res.status(500).send({
+									message: errorHandler.getErrorMessage(err)
+								});
+							} else {
+								user.save(function(err) {
+									if (err) {
+								 		return res.status(500).send({
+											message: errorHandler.getErrorMessage(err)
+										});
+									} else {
+										// The user has left the game. Return 200 OK.
+										res.send();
+									}
+								});
+							}
+						});
+					} else {
+				 		return res.status(400).send({
+							message: 'You have not joined that game.'
+						});
+					}
 				}
-
 			});
-			
 		}
 	});
-
-
 };
 
 // Returns the state of a game.
