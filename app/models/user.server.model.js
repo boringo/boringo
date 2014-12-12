@@ -68,10 +68,9 @@ var UserSchema = new Schema({
 		type: Number,
 		default: 0,
 	},
-	currentGameId: Schema.ObjectId,
-	currentBoardId: Schema.ObjectId,
-	tilesSelected: {
-		type: Array,
+	CurrentGames: {
+		type: [Schema.ObjectId],
+		default: [],
 	},
 	salt: {
 		type: String 

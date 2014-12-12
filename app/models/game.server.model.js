@@ -25,10 +25,6 @@ var GameSchema = new Schema({
     freeSpace: {
     	type: Boolean,
     },
-    termValidation: {
-    	type: Array,
-    	default: [],
-    },
     playerCount: {
     	type: Number,
         default: 0,
