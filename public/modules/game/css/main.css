@@ -27,7 +27,6 @@ a
   margin: 1rem 20% .3rem;
   position: relative;
   float: center;
-  /*font-family: ;*/
   text-decoration: none;
   text-align: center;
   display: block;
@@ -49,17 +48,30 @@ a
   color: black; 
 }
 
+.gameboard
+{
+  display: block;
+  text-align: center;
+  float: center;
+  overflow-x: auto;
+}
+
+#gameboard
+{
+  width: 75%;
+  height: 75%;
+}
+
 
 .cell
 {
-  /*font-family: ;*/
   text-decoration: none;
   text-align: center;
   cursor: default;
-  padding-top: 1rem;
-  padding-right: 2rem;
-  padding-bottom: 1.0625rem;
-  padding-left: 2rem;
+  padding-top: 0.5rem;
+  padding-right: 1rem;
+  padding-bottom: 0.5rem;
+  padding-left: 1rem;
   font-size: 1rem;
   
   background-color: white;
@@ -95,7 +107,6 @@ label
 input
 {
   font-size: 1rem;
-  /*margin: 1rem 2rem .3rem;*/
   width: 60%;
   padding-top: 0.2rem;
   padding-right: 0.2rem;
