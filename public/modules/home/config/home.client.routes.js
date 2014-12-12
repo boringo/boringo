@@ -1,8 +1,10 @@
 'use strict';
 
 // Setting up route
-angular.module('home').config(['$stateProvider',
-	function($stateProvider) {
+angular.module('home').config(['$stateProvider', '$urlRouterProvider',
+	function($stateProvider, $urlRouterProvider) {
+		$urlRouterProvider.otherwise('/');
+
 		// Home state routing
 		$stateProvider.
 		state('home', {
