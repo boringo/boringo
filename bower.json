@@ -9,6 +9,6 @@
     "angular-mocks": "~1.2",
     "angular-ui-utils": "~0.1.1",
     "angular-ui-router": "~0.2.11",
-    "foundation": "~5.4.7"
+    "angular-foundation": "~0.5.1"
   }
 }
