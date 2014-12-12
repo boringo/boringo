@@ -5,6 +5,7 @@ var mongoose = require('mongoose');
 var errorHandler = require('./errors.server.controller');
 var User = mongoose.model('User');
 var Game = mongoose.model('Game');
+var Board = mongoose.model('Board');
 var _ = require('lodash');
 
 // Creates a Board
@@ -51,25 +52,39 @@ function generateBoard(TermArray,boardLength,free)
 exports.create = function(req, res) {
 	var body = req.body;
 	var user = req.session.user;
+	console.log('Creating game...');
 	var game = new Game({
 		gameName: body.gameName,
 		gameTerms: body.gameTerms,
 		freeSpace: body.freeSpace,
 		boardLength: body.boardLength
 	});
+	console.log('Done.');
+	console.log('Creating board...');
+	var board = new Board({
+		tiles: generateBoard(body.gameTerms, body.boardLength, body.freeSpace)
+	});
+	console.log('Done.');
 	game.save(function(err) {
 		if (err) {
+			console.log('Error saving game to database.');
 			return res.status(400).send({
 				message: errorHandler.getErrorMessage(err)
 			});
 		} else {
-			var gameBoard = generateBoard(body.gameTerms,body.boardLength,body.freeSpace);
-			res.json(gameBoard);
-			//res.json(game);
+			board.save(function(err) {
+				if (err) {
+					console.log('Error saving board to database.');
+					// TODO: First remove the game from the DB?
+					return res.status(400).send({
+						message: errorHandler.getErrorMessage(err)
+					});
+				} else {
+					res.json(board);
+				}
+			});
 		}
 	});
-
-
 };
 
 // Lists all games.

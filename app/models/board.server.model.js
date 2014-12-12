@@ -10,7 +10,7 @@ var mongoose = require('mongoose'),
  * BoardSchema
  */
 var BoardSchema = new Schema({
-    tiles: [Number]
+    tiles: []
 });
 
 BoardSchema.virtual('boardId').get(function()
