@@ -7,6 +7,34 @@ var User = mongoose.model('User');
 
 // Returns information about a user.
 exports.info = function(req, res) {
-	// TODO
-	res.json({userID: req.params.userID});
+		User.findById(req.session.userId, function(err,user){
+	 	if(err){
+	 		return res.status(500).send({
+				message: errorHandler.getErrorMessage(err)
+			});
+	 	}
+	 	else
+	 	{
+		 	User.findById(req.params.userID, function(err,neededUser){
+			 	if(err){
+			 		return res.status(500).send({
+						message: errorHandler.getErrorMessage(err)
+					});
+			 	}
+			 	else
+			 	{
+			 		var userData = ({
+			 			userIDOut: neededUser.username,
+			 			wins: neededUser.totalWins,
+			 			losses: neededUser.totalLosses
+			 		});
+			 		
+			 		res.json(userData);
+
+			 	}
+			});
+
+	 	}
+	});
+	
 };
