@@ -17,6 +17,11 @@ h3
   color: white;
 }
 
+a
+{
+	text-decoration: none;
+}
+
 .button 
 {
   margin: 1rem 20% .3rem;
