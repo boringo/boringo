@@ -5,7 +5,8 @@
  */
 var mongoose = require('mongoose'),
 	Schema = mongoose.Schema,
-	crypto = require('crypto');
+	crypto = require('crypto'),
+	ObjectId = Schema.ObjectId;
 
 /**
  * A Validation function for local strategy properties
@@ -59,8 +60,21 @@ var UserSchema = new Schema({
 		default: '',
 		validate: [validateLocalStrategyPassword, 'Password should be longer']
 	},
+	totalWins: {
+		type: Number,
+		default: 0,
+	},
+	totalLosses: {
+		type: Number,
+		default: 0,
+	},
+	currentGameId: Schema.ObjectId,
+	currentBoardId: Schema.ObjectId,
+	tilesSelected: {
+		type: Array,
+	},
 	salt: {
-		type: String
+		type: String 
 	},
 	provider: {
 		type: String,
@@ -91,6 +105,11 @@ var UserSchema = new Schema({
 	}
 });
 
+UserSchema.virtual('userId').get(function()
+{
+    return this._id;
+});
+
 /**
  * Hook a pre save method to hash the password
  */
@@ -99,7 +118,6 @@ UserSchema.pre('save', function(next) {
 		this.salt = new Buffer(crypto.randomBytes(16).toString('base64'), 'base64');
 		this.password = this.hashPassword(this.password);
 	}
-
 	next();
 });
 
@@ -127,7 +145,6 @@ UserSchema.methods.authenticate = function(password) {
 UserSchema.statics.findUniqueUsername = function(username, suffix, callback) {
 	var _this = this;
 	var possibleUsername = username + (suffix || '');
-
 	_this.findOne({
 		username: possibleUsername
 	}, function(err, user) {

@@ -2,10 +2,11 @@
 /**
  * Module dependencies.
  */
-var init = require('./config/init')(),
-	config = require('./config/config'),
-	mongoose = require('mongoose'),
-	chalk = require('chalk');
+var init = require('./config/init')();
+var config = require('./config/config');
+var mongoose = require('mongoose');
+var chalk = require('chalk');
+var bodyParser = require('body-parser');
 
 /**
  * Main application entry file.
@@ -22,6 +23,7 @@ var db = mongoose.connect(config.db, function(err) {
 
 // Init the express application
 var app = require('./config/express')(db);
+app.use(bodyParser.json());
 
 // Bootstrap passport config
 require('./config/passport')();
