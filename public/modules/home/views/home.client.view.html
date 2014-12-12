@@ -1,40 +1,40 @@
 <section data-ng-controller="HomeController">
 
-<!-- <link rel="stylesheet" href="lib/foundation/css/foundation.css"/> -->
-<link rel="stylesheet" href="modules/game/css/main.css" />
+<link rel="stylesheet" href="lib/foundation/css/foundation.css"/>
+<link rel="stylesheet" href="modules/game/css/main.css"/>
 
+  <script src="lib/foundation/js/vendor/jquery.js"></script>
+  <script src="lib/foundation/js/foundation/foundation.js"></script>
+  <script src="lib/foundation/js/foundation/foundation.offcanvas.js"></script>
 
-  
   <div class="off-canvas-wrap" data-offcanvas>
-  <div class="inner-wrap">
-    <nav class="tab-bar">
-      <section class="left-small">
-        <a class="left-off-canvas-toggle menu-icon" href=""><span></span></a>
+    <div class="inner-wrap">
+      <nav class="tab-bar">
+        <section class="left-small">
+          <a class="left-off-canvas-toggle menu-icon" href="#!/#"><span></span></a>
+        </section>
+      </nav>
+
+      <aside class="left-off-canvas-menu">
+        <ul class="off-canvas-list">
+  	    <li><label>Menu</label></li>
+          <li><a href="#">View Profile</a></li>
+          <li><a href="#">Logout</a></li>
+        </ul>
+      </aside>
+
+      <section class="main-section">
+  		<h1>Home</h1><br><br><br>
+  		<a href="creation.html" class="button">Create Game</a>
+  		<a href="selection_local.html" class="button">Join Game</a>
       </section>
-    </nav>
 
-    <aside class="left-off-canvas-menu">
-      <ul class="off-canvas-list">
-	    <li><label>Menu</label></li>
-        <li><a href="#">View Profile</a></li>
-        <li><a href="#">Logout</a></li>
-      </ul>
-    </aside>
+    <a class="exit-off-canvas"></a>
 
-    <section class="main-section">
-		<h1>Home</h1><br><br><br>
-		<a href="creation.html" class="button">Create Game</a>
-		<a href="selection_local.html" class="button">Join Game</a>
-    </section>
-
-  <a class="exit-off-canvas"></a>
-
+    </div>
   </div>
-</div>
-<!-- 
-<script src="lib/foundation/js/vendor/jquery.js"></script>
-<script src="lib/foundation/js/foundation/foundation.js"></script>
-<script src="lib/foundation/js/foundation/foundation.offcanvas.js"></script>
+
+
 <script>$(document).foundation();</script>
- -->
+
 </section>
